@@ -9,9 +9,16 @@ interface PriceCardProps {
 
 export default function PriceCard({ price }: PriceCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const isFallbackAverage = price.state.includes("fallback average");
 
   return (
     <article id="prices" className="rounded-2xl border border-stone-200 bg-white/90 p-6 shadow-md backdrop-blur-sm">
+      {isFallbackAverage ? (
+        <div className="mb-4 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-800">
+          Karnataka prices were unavailable, so this view shows an average of the available mandi prices.
+        </div>
+      ) : null}
+
       <h3 className="font-display text-2xl text-agri-dark">
         Current Mandi Prices — {price.commodity} in {price.state}
       </h3>

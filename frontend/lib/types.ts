@@ -26,3 +26,16 @@ export interface PriceResponse {
   grade_B_estimate: string;
   grade_C_estimate: string;
 }
+
+export interface UploadHistoryEntry {
+  id: string;
+  timestamp: string;
+  source: "upload" | "price";
+  fileName: string;
+  produceName: string;
+  grade: GradeResponse["grade"];
+  confidence: number;
+  defectPercentage: number;
+  reason: string;
+  price?: PriceResponse;
+}

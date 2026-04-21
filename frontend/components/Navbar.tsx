@@ -1,22 +1,26 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const links = [
-  { href: "#grade", label: "Grade Produce" },
-  { href: "#prices", label: "Market Prices" },
+  { href: "/", label: "Dashboard" },
+  { href: "/upload", label: "Upload" },
+  { href: "/prices", label: "Mandi Prices" },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full border-b border-agri-mid/30 bg-agri-dark shadow-md">
       <nav className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="#top" className="flex items-center gap-2 text-white">
+        <Link href="/" className="flex items-center gap-2 text-white">
           <span className="text-xl">🌿</span>
           <span className="font-display text-xl font-bold tracking-wide">AgriGrade AI</span>
-        </a>
+        </Link>
 
         <button
           type="button"
@@ -36,9 +40,12 @@ export default function Navbar() {
         <ul className="hidden items-center gap-6 text-sm text-white md:flex">
           {links.map((link) => (
             <li key={link.label}>
-              <a href={link.href} className="border-b border-transparent pb-0.5 transition hover:border-white/80">
+              <Link
+                href={link.href}
+                className={`border-b pb-0.5 transition ${pathname === link.href ? "border-white" : "border-transparent hover:border-white/80"}`}
+              >
                 {link.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -49,13 +56,13 @@ export default function Navbar() {
           <ul className="space-y-2 text-sm text-white">
             {links.map((link) => (
               <li key={link.label}>
-                <a
+                <Link
                   href={link.href}
-                  className="block rounded-md px-2 py-2 transition hover:bg-agri-mid/50"
+                  className={`block rounded-md px-2 py-2 transition ${pathname === link.href ? "bg-agri-mid/60" : "hover:bg-agri-mid/50"}`}
                   onClick={() => setIsOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

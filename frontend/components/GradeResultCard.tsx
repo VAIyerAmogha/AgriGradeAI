@@ -17,6 +17,12 @@ export default function GradeResultCard({ result }: GradeResultCardProps) {
 
   return (
     <article className="rounded-2xl border border-stone-200 bg-white/90 p-6 shadow-md backdrop-blur-sm">
+      {result.grade === "REJECT" ? (
+        <div className="mb-4 rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+          Automatic rejection triggered because defect coverage is above the 15% safety threshold.
+        </div>
+      ) : null}
+
       {result.uncertain ? (
         <div className="mb-4 rounded-lg border border-yellow-300 bg-yellow-50 px-3 py-2 text-sm text-yellow-700">
           ⚠️ Low confidence — result may need manual verification
