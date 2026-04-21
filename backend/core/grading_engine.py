@@ -31,8 +31,8 @@ GRADE_THRESHOLDS = {
     "default": {"A": 0.04, "B": 0.15, "C": 0.28},
 }
 
-CLASS_NAMES = {0: "tomato", 1: "apple", 2: "defect"}
-PRODUCE_CLASS_IDS = {0, 1}
+CLASS_NAMES = {0: "tomato", 1: "apple", 2: "defect", 3: "mango"}
+PRODUCE_CLASS_IDS = {0, 1, 3}
 DEFECT_CLASS_ID = 2
 MODEL_INPUT_SIZE = 640
 CONFIDENCE_THRESHOLD = 0.25
@@ -235,6 +235,24 @@ def run_grading_pipeline(image_bytes: bytes) -> GradeResponse:
     produce_area = max(box_area(produce_box), 1.0)
     defect_area = sum(intersection_area(defect_box, produce_box) for defect_box in defect_boxes)
     defect_percentage = max(0.0, min(100.0, (defect_area / produce_area) * 100.0))
+
+    if confidence < 0.5:
+        grade = "REJECT"
+        reason = (
+            f"Low model confidence ({confidence:.2f}) is below the 50% threshold, so this produce is rejected without classification. "
+            f"Detected produce candidate: {produce_name}."
+        )
+        return GradeResponse(
+            produce_name=produce_name,
+            confidence=confidence,
+            defect_percentage=round(defect_percentage, 2),
+            color_score=0.0,
+            texture_score=0.0,
+            shape_score=0.0,
+            grade=grade,
+            reason=reason,
+            uncertain=True,
+        )
 
     highest_defect_confidence = max((detection.score for detection in defect_detections), default=0.0)
     max_severity = max(0.6, min(1.0, 0.5 + 0.5 * highest_defect_confidence)) if defect_detections else 0.0

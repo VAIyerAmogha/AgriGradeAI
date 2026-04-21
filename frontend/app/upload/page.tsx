@@ -103,15 +103,6 @@ export default function UploadPage() {
           </div>
 
           <aside className="space-y-6">
-            <div className="rounded-3xl border border-stone-200 bg-white/90 p-6 shadow-md">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-agri-mid">How it works</p>
-              <ol className="mt-4 space-y-4 text-sm leading-6 text-stone-700">
-                <li>1. Upload a JPEG or PNG image.</li>
-                <li>2. The backend runs the ONNX model and grades the produce.</li>
-                <li>3. If defect coverage crosses 15%, the lot is rejected immediately.</li>
-                <li>4. Mandi prices are fetched, with a Karnataka average fallback if needed.</li>
-              </ol>
-            </div>
 
             <div className="rounded-3xl border border-stone-200 bg-white/90 p-6 shadow-md">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-agri-mid">Recent uploads</p>
